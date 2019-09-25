@@ -4,6 +4,7 @@ import {NotFound} from "ts-httpexceptions";
 import {Calendar, CreateCalendar} from "../../models/Calendar";
 import {CalendarsService} from "../../services/calendars/CalendarsService";
 import {EventsCtrl} from "../events/EventsCtrl";
+import {PathParamsInteger} from "../decorators/PathParamsInteger";
 
 /**
  * Add @Controller annotation to declare your class as Router controller.
@@ -25,8 +26,8 @@ export class CalendarsCtrl {
 
   @Get("/:id")
   @Returns(Calendar)
-  async get(@Required() @PathParams("id") id: string): Promise<Calendar> {
-    const calendar = await this.calendarsService.find(id);
+  async get(@Required() @PathParamsInteger("id") id: number): Promise<Calendar> {
+    const calendar = await this.calendarsService.find(String(id));
 
     if (calendar) {
       return calendar;
