@@ -1,7 +1,6 @@
 import {GlobalAcceptMimesMiddleware, ServerLoader, ServerSettings} from "@tsed/common";
 import "@tsed/swagger";
 import {join} from "path";
-import {RestCtrl} from "./controllers/RestCtrl";
 
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
@@ -19,10 +18,7 @@ const rootDir = __dirname;
     requestFields: ["reqId", "method", "url", "headers", "query", "params", "duration"]
   },
   mount: {
-    "/rest": [
-      RestCtrl, // Manual import
-      `${rootDir}/controllers/**/*.ts` // Automatic Import, /!\ doesn't works with webpack/jest, use  require.context() or manual import instead
-    ]
+    "/": `${rootDir}/controllers/**/*.ts` // Automatic Import, /!\ doesn't works with webpack/jest, use  require.context() or manual import instead
   },
   swagger: [
     {
