@@ -1,7 +1,9 @@
 import {GlobalAcceptMimesMiddleware, ServerLoader, ServerSettings} from "@tsed/common";
 import "@tsed/swagger";
 import {$log} from "ts-log-debug";
+import * as redis  from "redis";
 
+const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const compress = require("compression");
@@ -39,7 +41,20 @@ export class Server extends ServerLoader {
       .use(bodyParser.urlencoded({
         extended: true
       }));
-
+    let RedisStore = require('connect-redis')(session)
+    let redisClient = redis.createClient({
+    "host": "127.0.0.1",
+    "password": "auth",
+    "port": 6379,
+    "db": "0"
+    }); 
+    this.use(session({
+      secret: "keyboard cat",
+      resave: false,
+      saveUninitialized: true,
+      cookie: {secure: true},
+      store: new RedisStore({ client: redisClient, serializer: serializer})
+    }));
     return null;
   }
 

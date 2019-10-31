@@ -36,6 +36,10 @@
     "method-override": "^3.0.0",
     "node-uuid": "^1.4.8",
     "ts-json-properties": "2.0.3"
+    "redis": "^2.8.0",
+    "@types/connect-redis": "0.0.11",
+    "@types/redis": "^2.8.14",
+    "connect-redis": "^4.0.3",
   },
   "devDependencies": {
     "@types/chai": "^4.1.2",
